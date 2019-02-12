@@ -1,0 +1,8 @@
+# mode: org ; coding: utf-8
+
+
+#+BEGIN_CENTER
+[[https://zimoun.github.io/infomath-orgmode/pres.html][Start Org-mode presentation]]
+
+[[https://zimoun.github.io/infomath-emacs/pres.html][Start Emacs presentation]]
+#+END_CENTER

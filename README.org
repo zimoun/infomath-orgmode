@@ -1,0 +1,37 @@
+[[https://zimoun.github.com/infomath-orgmode/pres.html][The presentation is served there.]]
+
+--
+
+
+Open the file =pres.org= with Emacs:
+
+ 1) Copy the proposed =init.el= file in the hidden directory =$HOME/.emacs.d/=
+ 2) Start Emacs (click somewhere depending on your OS/distribution)
+ 3) Go to /File->Visit File/ and reach =pres.org=
+ 4) Move the cursor down with the Arrow
+ 5) In front of the section README, press TAB
+ 6) The section is expanded
+ 7) Move down in front of #+begin_src, press TAB
+ 8) The block is expanded
+ 9) Press TAB again, the block is collapsed
+ 10) Move the cursor to the header of a subsection
+ 11) Press TAB, the subsection is expanded
+ 12) Press TAB again, the subsection is collasped
+ 13) Cycle with Shift+TAB
+ 14) Read, Try, Fail, Try again, and be patient :-)
+
+The presentation and =pres.org= are an pedestrian attempt of an Org-mode and
+Emacs's discovery. So please email me or open an issue.
+
+
+The presentation is served [[https://zimoun.github.com/infomath-orgmode/pres.html][there]].
+
+*Note* that some images point to non-secure =http= (i.e., not
+=https=). Maybe, your web-browser needs to allow non-secure connections
+(see address bar, lock icons, turn on/off) to display the presentaion.
+
+
+--
+
+
+Email me or open an issue if something does not work.

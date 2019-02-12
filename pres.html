@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>M-x org-mode</title>
+<meta name="author" content="(simon)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/sky.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">M-x org-mode</h1><h2 class="author">simon</h2><h2 class="date">Jan. 24, 2019</h2><p class="date">Created: 2019-02-12 Tue 09:48</p>
+</section>
+
+<section>
+<section id="slide-sec-">
+<h2 id="org36dbc28">From where I talk ?</h2>
+<div class="outline-text-2" id="text-org36dbc28">
+</div>
+</section>
+<section id="slide-sec-">
+<h4 id="org651a740">Who I am ?</h4>
+<ul>
+<li>Mainly a geek guy</li>
+<li>Research Engineer at Univ. Paris 7 Diderot</li>
+<li><ul>
+<li>Post-Doc Católica (Chile)</li>
+<li>Post-Doc Univ. Liège (<i>hi Berty!</i>)</li>
+<li>PhD at ONERA Toulouse</li>
+
+</ul></li>
+
+</ul>
+
+<blockquote nil>
+<p>
+<code>simon.tournier@univ-paris-diderot.fr</code>
+</p>
+
+<p>
+<a href="https://github.com/zimoun">https://github.com/zimoun</a>
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orge6083d8">My life</h4>
+<ul>
+<li>2006-2010: Vim user&#x2026; and happy!</li>
+<li>2011 New Year Resolutions: <a href="https://www.youtube.com/watch?v=JWD1Fpdd4Pc">Switch</a> to <a href="https://upsilon.cc/~zack/blog/posts/2008/11/from_Vim_to_Emacs_-_part_2/">Emacs</a> (video)</li>
+<li>2016: New Job with heavy context switch</li>
+
+</ul>
+
+<p>
+Not able to <b>Getting Things Done</b>.
+</p>
+
+<p>
+\(\Rightarrow\) <a href="https://robots.thoughtbot.com/the-many-uses-of-org-mode">Switch to Org-mode</a>
+</p>
+
+
+<blockquote nil>
+<p>
+I am only an enthusiast user, not a guru
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orga8327ed">My typical use-cases</h4>
+<ul>
+<li>Organize my tasks and log them</li>
+<li>Write <span class="underline"><i>docs</i></span> for myself</li>
+<li>Produce computational notebooks</li>
+
+</ul>
+
+
+<div class="org-src-container">
+
+<pre  class="src src-elisp" id="ask-at-point">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">ask-at-point</span> (<span style="color: #228b22;">&amp;optional</span> i-know)
+  <span style="color: #8b2252;">"Feel free to ask everything."</span>
+  (<span style="color: #a020f0;">interactive</span> <span style="color: #8b2252;">"P"</span>)
+  (<span style="color: #a020f0;">if</span> i-know (message <span style="color: #8b2252;">"Quick Answer."</span>)
+   (browse-url
+    (concat <span style="color: #8b2252;">"https://www.ddg.gg/?q=org-mode+"</span>
+            (thing-at-point 'symbol)))))
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org35d467d">What Org-mode is?</h2>
+<ol>
+<li>A major mode of Emacs</li>
+<li><b>Markup language</b>, help for:
+<ul>
+<li>keeping notes</li>
+<li>maintenaing TODO lists</li>
+<li>planning projects</li>
+<li>authoring documents</li>
+<li>table editor</li>
+
+</ul></li>
+<li>Killer feature of Emacs ;-)</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="orgcac24fb">What Emacs is ?</h2>
+<div class="outline-text-2" id="text-orgcac24fb">
+</div>
+</section>
+<section id="slide-sec-">
+<h4 id="org5ddd501">The <a href="https://www.youtube.com/watch?v=RtvlBS4PMF0">Power to the people</a> :-)</h4>
+
+<div class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Unico_Anello.png/220px-Unico_Anello.png" alt="220px-Unico_Anello.png" width="50%" />
+</p>
+</div>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org494593b">Explanations in previous info-math</h4>
+<p>
+<a href="https://zimoun.github.io/infomath-emacs/pres.html">https://zimoun.github.io/infomath-emacs/pres.html</a>
+</p>
+
+<p>
+(ok let quick recap in 3 slides)
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org0ae9329">Definition</h4>
+<p>
+Emacs is a <b>User Interface</b> (UI) to manipulate text
+</p>
+
+<ul>
+<li>Decent <a href="https://www.gnu.org/software/emacs/">editor</a></li>
+<li>IDE for a lot of languages (<a href="http://cedet.sourceforge.net">CEDET</a>, <a href="https://common-lisp.net/project/slime/">SLIME</a>, <a href="http://www.nongnu.org/geiser/">Geiser</a>, <a href="https://tkf.github.io/emacs-ipython-notebook/">EIN</a>)</li>
+<li><a href="https://notmuchmail.org/notmuch-emacs/">Mail Reader</a>, <a href="https://www.gnu.org/software/emacs/manual/html_node/gnus/">Mail Reader</a>, <a href="https://github.com/skeeto/elfeed">RSS Reader</a>, etc.</li>
+<li><a href="https://en.wikipedia.org/wiki/Lisp_machine">Extensible Lisp machine</a>?</li>
+<li><a href="https://github.com/ch11ng/exwm">Windows Manager</a>?</li>
+<li><a href="http://doc.rix.si/cce/cce.html">OS</a>? :-)</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org2d29ca4">Theorem / Corollary / Example</h4>
+<blockquote nil>
+<p>
+All what X is able, Emacs does it too.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="https://i.redd.it/l58yl5wh6fk11.png" alt="l58yl5wh6fk11.png" width="50%" />
+</p>
+</div>
+
+<blockquote nil>
+<p>
+<b>Advice</b>: give a try to the tutorial of Emacs: <code>C-h t</code>
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgf7c59a8">Alternative Reality</h4>
+<ul>
+<li><a href="http://batsov.com/prelude/">Emacs Prelude</a></li>
+<li><a href="http://spacemacs.org">Spacemacs</a></li>
+<li><a href="http://ergoemacs.github.io">ErgoEmacs</a></li>
+<li><a href="http://emacs-bootstrap.com/">Emacs Bootstrap</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_mono/viper.html">Viper</a> \(\longrightarrow\) <a href="https://github.com/emacs-evil/evil">Evil</a></li>
+<li><a href="https://github.com/technomancy/emacs-starter-kit">Starter Kit</a></li>
+<li><a href="https://github.com/jkitchin/scimax">Scimax</a></li>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/CUA-Bindings.html">CUA-mode</a></li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org6ca5eba">How to configure</h2>
+<p>
+The Org-mode configuration is driven by
+</p>
+<blockquote nil>
+<p>
+<code>$HOME/.emacs.d/init.el</code>
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org3f12a59">Configure what?</h4>
+<blockquote nil>
+<p>
+Nothing to do!
+</p>
+</blockquote>
+
+<p>
+<b>Org-mode is included in all recent Emacs</b>
+</p>
+
+<p>
+(since GNU Emacs 22 released in 2006)
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org3415a22">But&#x2026;</h4>
+<p>
+Specific features are in contrib
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-elisp" id="require-package">(<span style="color: #a020f0;">require</span> '<span style="color: #008b8b;">package</span>)
+(<span style="color: #a020f0;">setq</span> package-enable-at-startup nil)
+(add-to-list 'package-archives
+             <span style="color: #b22222;">;; </span><span style="color: #b22222;">`</span><span style="color: #008b8b;">use-package</span><span style="color: #b22222;">' is not in ELPA, as many more ;-)</span>
+             '(<span style="color: #8b2252;">"melpa"</span> . <span style="color: #8b2252;">"http://melpa.org/packages/"</span>))
+(add-to-list 'package-archives
+               <span style="color: #b22222;">;; </span><span style="color: #b22222;">Add org-plus-contrib</span>
+               '(<span style="color: #8b2252;">"org"</span> . <span style="color: #8b2252;">"http://orgmode.org/elpa/"</span>))
+(package-initialize)
+</pre>
+</div>
+<blockquote nil>
+<p>
+<code>M-x package-list-packages</code>
+</p>
+</blockquote>
+
+
+
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org65db71e">Let's talk about Unicorn</h2>
+
+<div class="figure">
+<p><img src="https://lists.gnu.org/archive/html/emacs-orgmode/2009-06/jpgOOYZDKoq6T.jpg" alt="jpgOOYZDKoq6T.jpg" width="60%" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="orgad216ca"><a href="https://orgmode.org">org-mode</a> is&#x2026;</h2>
+<blockquote nil>
+<p>
+"<a href="https://www.youtube.com/watch?v=fgizHHd7nOo">Awesome!</a>" &#x2013; <a href="https://github.com/jkitchin/dft-book">John Kitchin</a> (video)
+</p>
+</blockquote>
+
+<ul>
+<li><a href="https://orgmode.org/worg/org-tutorials/org4beginners.html">Org for beginners</a></li>
+<li><a href="http://pragmaticemacs.com/org-mode-tutorials/">A tutorial/blog</a></li>
+<li><a href="https://orgmode.org/worg/org-tutorials/org-screencasts/org-mode-google-tech-talk.html#sec-2">Google Tech Talk</a> by Carsten Dominik (video)</li>
+<li><a href="https://www.jstatsoft.org/article/view/v046i03">Original Paper</a> (2012)</li>
+<li><a href="https://youtube.com/watch?v=SzA2YODtgK4">Getting Started with Org-mode</a> by New-York Emacs meetup (video)</li>
+<li><a href="https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html">An implementation: Org-mode + GTD</a></li>
+<li><a href="https://blog.fugue.co/2015-11-11-guide-to-emacs.html">CEO</a> explains his <a href="https://blog.fugue.co/2015-11-11-guide-to-emacs.html">experience</a></li>
+
+</ul>
+
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgfe114d4">Org is vast&#x2026;</h4>
+<p>
+&#x2026; <b>start small!</b>
+</p>
+
+<blockquote nil>
+<p>
+"Don't try to set up the 'final' task managing system from the
+start.  Because you have no idea yet what your system should look
+like.
+[&#x2026;]
+Start by creating and managing a small TODO list and
+then develop your own system as the needs arises." &#x2013; <a href="http://lists.gnu.org/archive/html/emacs-orgmode/2008-04/msg00009.html">Carsten Dominik</a>
+(creator of org)
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orga6b94a9"><a href="http://sachachua.com/blog/2014/01/tips-learning-org-mode-emacs/">Where/How to start</a></h4>
+
+<div class="figure">
+<p><img src="http://sachachua.com/blog/wp-content/uploads/2014/01/2014-01-07-Map-for-learning-Org-Mode-for-Emacs-640x480.png" alt="2014-01-07-Map-for-learning-Org-Mode-for-Emacs-640x480.png" width="60%" />
+</p>
+</div>
+
+<p>
+<a href="https://orgmode.org/orgcard.pdf">https://orgmode.org/orgcard.pdf</a>
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org7ed0aac">My experience</h4>
+<ul>
+<li>Learn a couple of its capabilities</li>
+<li>Integrate them into your workflow</li>
+<li>You’ll find yourself thinking, "Hum?, it would be nice if I
+could X"</li>
+<li>Then browse the manual <a href="https://www.gnu.org/software/emacs/manual/html_node/org/">(<code>C-h i m org</code>)</a></li>
+
+</ul>
+
+<p>
+&#x2026; and, in fact, Org can do X
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="orge593176">Show me the Unicorn!!</h2>
+
+<div class="figure">
+<p><img src="https://lists.gnu.org/archive/html/emacs-orgmode/2009-06/jpgOOYZDKoq6T.jpg" alt="jpgOOYZDKoq6T.jpg" width="60%" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org4034316">Markup languages</h2>
+<div class="outline-text-2" id="text-org4034316">
+</div>
+</section>
+<section id="slide-sec-">
+<h4 id="org9bdfd83">Basics</h4>
+<ul>
+<li><span class="underline">underline</span></li>
+<li><b>bold</b></li>
+<li><i>italic</i></li>
+<li><code>verbatim</code></li>
+<li><code>code</code></li>
+<li><del>strike</del></li>
+<li>list</li>
+<li>section, <a href="https://orgmode.org/">link</a>, etc.</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgc0b36eb">Raw</h4>
+<div class="org-src-container">
+
+<pre  class="src src-text">* Level 1
+** Level 2
+*** Level 3
+**** Level 4
+
+   + _underline_
+   + *bold*
+   + /italic/
+
+*** Other 3
+
+   1) =verbatim=
+   2) ~code~
+   3) +strike+
+
+** More 2
+
+   - list
+   - section, [[https://orgmode.org/][link]], etc.
+</pre>
+</div>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orga612942">Facilities to write</h4>
+<ul>
+<li><code>M-Enter</code> creates new item</li>
+<li><code>M-Left/Right</code> changes the level</li>
+<li><code>M-Up/Dow</code> moves the item up/down</li>
+<li><code>C-c C-n</code> move next header (<code>C-p</code> previous)</li>
+<li><code>C-c C-u</code> move upper header (level 2-&gt;level 1)</li>
+<li><code>S-Left/Right</code> change list item kind (<code>C-c -</code>)</li>
+<li><code>S-TAB</code> cycles the visibility</li>
+
+</ul>
+
+<p>
+Emacs power! ;-)
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org2bbc7be">Equation (raw)</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org">Let only consider $\pi^2$ or $\Pi_\infty$, considering
+$$\cos(x) = \textrm{real}~ \sum_n \frac{ix}{n!}$$
+
+\begin{array}{ccl}
+u^{\prime\prime} + k^2 u &amp;=&amp; 0 \\
+&amp; \textrm{with} &amp;
+u(0) = 1 \\
+&amp; \textrm{and} &amp;
+u^\prime(1)=iku(1)
+\end{array}
+</pre>
+</div>
+
+<p>
+\(\LaTeX\) support
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgb98c03d">The equations exported</h4>
+<p>
+Let only consider \(\pi^2\) or \(\Pi_\infty\), considering
+\[\cos(x) = \textrm{real}~ \sum_n \frac{ix}{n!}\]
+</p>
+
+<div>
+\begin{array}{ccl}
+u^{\prime\prime} + k^2 u &=& 0 \\
+& \textrm{with} &
+u(0) = 1 \\
+& \textrm{and} &
+u^\prime(1)=iku(1)
+\end{array}
+
+</div>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgf4616ef">Exported?</h4>
+<p>
+Yes!
+</p>
+
+<p>
+from <code>.org</code> to HTML or PDF (or <code>.tex</code>) or &#x2026; Reveal.js etc.
+</p>
+
+<p>
+&#x2014;
+</p>
+
+<p>
+<code>C-c C-e</code> opens the menu of exporters
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org8b1886e">More list: checkbox</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #0000ff;">* Stuff </span><span style="color: #ff0000; font-weight: bold;">[2/4]</span>
+
+- <span style="font-weight: bold;">[X]</span> Read the Dautray-Lions
+- <span style="font-weight: bold;">[-]</span> Write summary <span style="color: #ff0000; font-weight: bold;">[75%]</span>
+  + <span style="font-weight: bold;">[X]</span> Tome 1
+  + <span style="font-weight: bold;">[X]</span> Tome 2
+  + <span style="font-weight: bold;">[X]</span> Tome 3
+  + <span style="font-weight: bold;">[ ]</span> Les autres
+- <span style="font-weight: bold;">[ ]</span> Present Chapter 2 in Seminar
+- <span style="font-weight: bold;">[X]</span> Drink coffee
+</pre>
+</div>
+
+<ul>
+<li>Validate: <code>C-c C-c</code> on the item</li>
+<li>Automatic update</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org7d8cad7">Wait!</h2>
+<p>
+Is not also a planner?
+</p>
+
+
+<div class="figure">
+<p><img src="https://i5.walmartimages.com/asr/34909043-4ebd-4043-a6d5-c31b2f6cbbf4_1.8e2dea8a0fc20d8775352b09caca44ff.jpeg" alt="34909043-4ebd-4043-a6d5-c31b2f6cbbf4_1.8e2dea8a0fc20d8775352b09caca44ff.jpeg" width="20%" />
+</p>
+</div>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org7251b0b">Plan: TODO DONE (NEXT WAIT CANCELED) etc.</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #0000ff;">* </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #0000ff;"> Presentation </span><span style="color: #ff0000; font-weight: bold;">[1/4]</span>
+<span style="color: #a0522d;">** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a0522d;"> Collect ressources </span><span style="color: #ff0000; font-weight: bold;">[50%]</span>
+<span style="color: #a020f0;">*** </span><span style="color: #228b22; font-weight: bold;">DONE</span><span style="color: #a020f0;"> Read the manual</span>
+    <span style="color: #a020f0;">CLOSED:</span> <span style="color: #a020f0; text-decoration: underline;">[2019-01-22 Tue 17:12]</span>
+<span style="color: #a020f0;">*** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a020f0;"> Browse the web</span>
+<span style="color: #a0522d;">** </span><span style="color: #228b22; font-weight: bold;">DONE</span><span style="color: #a0522d;"> Preparation</span>
+   <span style="color: #a020f0;">DEADLINE:</span> <span style="color: #a020f0; text-decoration: underline;">&lt;2019-01-23 Wed&gt;</span>
+   <span style="color: #a020f0;">CLOSED:</span> <span style="color: #a020f0; text-decoration: underline;">[2019-01-22 Tue 22:22]</span>
+<span style="color: #a0522d;">** Free header</span>
+<span style="color: #a0522d;">** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a0522d;"> Lunch Bertrand</span>
+   <span style="color: #a020f0;">SCHEDULED:</span> <span style="color: #a020f0; text-decoration: underline;">&lt;2019-01-24 Thu&gt;</span>
+<span style="color: #a0522d;">** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a0522d;"> Fix bugs with Reveal.js</span>
+   <span style="color: #a020f0;">DEADLINE:</span> <span style="color: #a020f0; text-decoration: underline;">&lt;2019-01-25 Fri&gt;</span>
+</pre>
+</div>
+
+<ul>
+<li><code>C-c C-t</code> cycles nothing-&gt;TODO-&gt;DONE-&gt;nothing</li>
+<li>Automatic set date and hour when closing (see <code>init.el</code>)</li>
+<li><code>S-Left/Right</code> also works</li>
+<li><code>C-c C-s</code> schedules</li>
+<li><code>C-c C-d</code> assigns a deadline</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org87a6e41">Manipulation of dates</h4>
+<ul>
+<li>Cursor inside the brackets then <code>S-Up/Down</code></li>
+<li><code>C-c C-c</code> updates the day</li>
+<li>Use Emacs calendar <code>M-x calendar</code></li>
+
+</ul>
+
+<p>
+(<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Calendar_002fDiary.html">C-h i g (emacs)Calendar Diary</a>)
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgf690961">Agenda View</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elisp"><span style="color: #483d8b;">:bind</span> (<span style="color: #8b2252;">"\C-ca"</span>  . org-agenda)
+
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">where to look for the agenda files</span>
+(<span style="color: #a020f0;">setq</span> org-agenda-files (directory-files-recursively <span style="color: #8b2252;">"~/org/"</span> <span style="color: #8b2252;">"\.org$"</span>))
+</pre>
+</div>
+
+<p>
+demo
+</p>
+
+<p>
+(<code>C-c a a</code> or <code>M-x org-agenda</code>)
+</p>
+
+<ul>
+<li>Navigate: menu Agenda etc.</li>
+<li>Search: <code>C-a a s</code> and e.g. web</li>
+
+</ul>
+
+<p>
+@simon: <code>v l</code> to setup log on.
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org4bafadd">Tags / Priorities</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #a0522d;">** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a0522d;"> Bertrand's idea</span>
+<span style="color: #a020f0;">*** </span><span style="color: #228b22; font-weight: bold;">DONE</span><span style="color: #a020f0;"> Discuss                                                      </span><span style="color: #a020f0; font-weight: bold;">:</span><span style="color: #3cb371; font-weight: bold; text-decoration: underline;">@meet</span><span style="color: #a020f0; font-weight: bold;">:</span>
+    <span style="color: #a020f0;">CLOSED:</span> <span style="color: #a020f0; text-decoration: underline;">[2019-01-16 Wed 18:37]</span>
+<span style="color: #a020f0;">*** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a020f0;"> Proof-of-Concept with Julia                                   </span><span style="color: #a020f0; font-weight: bold;">:code:</span>
+<span style="color: #b22222;">**** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #b22222;"> </span><span style="color: #a020f0;">[#B]</span><span style="color: #b22222;"> Clean the geo file</span>
+<span style="color: #b22222;">**** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #b22222;"> </span><span style="color: #a020f0;">[#A]</span><span style="color: #b22222;"> Read the mesh</span>
+<span style="color: #b22222;">**** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #b22222;"> </span><span style="color: #a020f0;">[#C]</span><span style="color: #b22222;"> Update Petsc</span>
+<span style="color: #b22222;">**** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #b22222;"> </span><span style="color: #a020f0;">[#B]</span><span style="color: #b22222;"> Implement decent Krylov</span>
+<span style="color: #a020f0;">*** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a020f0;"> Refresh the idea                                       </span><span style="color: #a020f0; font-weight: bold;">:</span><span style="color: #3cb371; font-weight: bold; text-decoration: underline;">@meet</span><span style="color: #a020f0; font-weight: bold;">:write:</span>
+    <span style="color: #a020f0;">SCHEDULED:</span> <span style="color: #a020f0; text-decoration: underline;">&lt;2019-01-31 Thu 18:00&gt;</span>
+<span style="color: #a020f0;">*** </span><span style="color: #ff0000; font-weight: bold;">TODO</span><span style="color: #a020f0;"> Sent the paper to Wave                                       </span><span style="color: #a020f0; font-weight: bold;">:write:</span>
+    <span style="color: #a020f0;">DEADLINE:</span> <span style="color: #a020f0; text-decoration: underline;">&lt;2019-02-01 Fri&gt;</span>
+<span style="color: #a0522d;">** </span><span style="color: #228b22; font-weight: bold;">DONE</span><span style="color: #a0522d;"> Calderon preconditioner                             </span><span style="color: #a0522d; font-weight: bold;">:read:write:code:</span>
+   <span style="color: #a020f0;">CLOSED:</span> <span style="color: #a020f0; text-decoration: underline;">[2019-01-15 Tue 15:51]</span>
+</pre>
+</div>
+
+<p>
+demo
+</p>
+
+<ul>
+<li><code>C-c a t</code> shows the tasks sorted by priorities</li>
+<li><code>C-c a m code</code> shows the tasks corresponding to the tag <code>code</code></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org6f45dd5">Possible+Imposible = Possimpible?</h2>
+
+<div class="figure">
+<p><img src="http://www.hdfbcover.com/randomcovers/covers/Legen-wait-for-it-dary-stinson-quotes.jpg" alt="Legen-wait-for-it-dary-stinson-quotes.jpg" />
+</p>
+</div>
+
+<p>
+or how to easily manage the table
+</p>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orge69eceb">M-x org-table-create</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #0000ff;">| Student | Algebra | Analysis |</span>
+<span style="color: #0000ff;">|---------+---------+----------|</span>
+<span style="color: #0000ff;">| Alice   |    12.5 |      15. |</span>
+<span style="color: #0000ff;">| Bob     |     11. |      14. |</span>
+<span style="color: #0000ff;">| John    |     10. |      10. |</span>
+</pre>
+</div>
+
+<ul>
+<li><code>C-c |</code> creates with the convention line x col</li>
+<li><code>M-S-Right</code> creates new col (<code>Left</code> deletes)</li>
+<li><code>M-a/e</code> moves beginning/end cell</li>
+<li><code>C-c -</code> or <code>C-c Enter</code> inserts horizontal line</li>
+<li><code>M-S-Up</code> removes the current line</li>
+<li><code>C-c ^</code> sorts the col</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgf768b6e">table and \(\LaTeX\)</h4>
+<ul>
+<li>Write table with Org-mode (easy!)</li>
+<li>Export to <code>.tex</code> with <code>C-c C-e C-b l l</code> (body only)</li>
+<li>Use <code>\input{}</code></li>
+
+</ul>
+
+<p>
+(or epxort to buffer <code>C-c C-e C-b l L</code> and copy/paste)
+</p>
+
+<blockquote nil>
+<p>
+DEMO!
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org2883813">makefile</h4>
+<div class="org-src-container">
+
+<pre  class="src src-makefile"><span style="color: #0000ff;">all</span>: doc.tex table1.tex table2.tex
+    pdflatex doc.tex
+
+<span style="color: #0000ff;">%.tex</span>: %.org
+     emacs -batch -q $<span style="color: #008b8b;">&lt;</span> --eval=<span style="color: #8b2252;">"(org-latex-export-to-latex nil nil t t)"</span>
+
+<span style="color: #0000ff;">clean</span>:
+    -rm table?.tex
+    -rm doc.{aux,log}
+</pre>
+</div>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org70680f3">The spreadsheet</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #0000ff;">| N | N^4 | </span><span style="color: #7f7f7f;">~Sqrt(N)~</span><span style="color: #0000ff;"> | 1/N | Mean |</span>
+<span style="color: #0000ff;">|---+-----+-----------+-----+------|</span>
+<span style="color: #0000ff;">| 4 |     |           |     |      |</span>
+<span style="color: #0000ff;">| 3 |     |           |     |      |</span>
+<span style="color: #0000ff;">| 2 |     |           |     |      |</span>
+<span style="color: #0000ff;">| 1 |     |           |     |      |</span>
+<span style="color: #0000ff;">|   |     |           |     |      |</span>
+<span style="color: #b22222;">#+TBLFM: $2=$1^4::$3=sqrt($1)::$4=1/$1::$5=vmean($2..$4)::@6$1=vmean(@2$1..@4$1)</span>
+</pre>
+</div>
+
+<p>
+<b><span class="underline">I do not use myself</span></b>
+</p>
+
+<ul>
+<li><code>C-c ?</code> to get information the current cell</li>
+<li><code>C-c }</code> to enter in debbuging mode</li>
+
+</ul>
+
+<p>
+Entry point: the <a href="https://orgmode.org/worg/org-tutorials/org-spreadsheet-intro.html">tutorial</a> :-)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="orgcd003dc">Computational Document</h2>
+<p>
+Toward Reproducible <i>workflow</i>
+</p>
+
+<blockquote nil>
+<p>
+"Buzzword &#x2013; What'chu talkin' 'bout, Willis?" &#x2013; Arnold
+</p>
+</blockquote>
+<ul>
+<li><a href="https://orgmode.org/worg/org-contrib/babel/uses.html#sec-6">Org-Babel</a></li>
+<li><a href="https://hal.inria.fr/hal-01112795">An Effective Git And Org-Mode Based Workflow For Reproducible Research</a></li>
+<li><a href="http://kieranhealy.org/files/misc/workflow-apps.pdf">Choosing your Workflow Applications</a></li>
+<li><a href="http://kitchingroup.cheme.cmu.edu/scimax">Scimax</a> by John Kitchin</li>
+<li><a href="https://youtube.com/watch?v=1-dUkyn_fZA">Emacs + Org-mode + Python = reproducible research</a> (video)</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orga0fac93">Org-babel</h4>
+
+<div class="figure">
+<p><img src="https://orgmode.org/worg/images/babel/babelfish.png" alt="babelfish.png" />
+</p>
+</div>
+
+<blockquote nil>
+<p>
+The Babel Fish is small, yellow, and simultaneously translates from one spoken language to another.
+</p>
+
+<p>
+The Hitchhiker's Guide to the Galaxy &#x2013; Douglas Adams
+</p>
+</blockquote>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgea9eed1">Blocks</h4>
+<div class="org-src-container">
+
+<pre  class="src src-org"><span style="color: #b22222;">#+begin_src python</span>
+<span style="color: #7f7f7f;">  </span><span style="color: #a020f0;">def</span><span style="color: #7f7f7f;"> </span><span style="color: #0000ff;">f</span><span style="color: #7f7f7f;">(x):</span>
+<span style="color: #7f7f7f;">    </span><span style="color: #a020f0;">return</span><span style="color: #7f7f7f;"> x + x</span>
+<span style="color: #b22222;">#+end_src</span>
+
+<span style="color: #b22222;">#+begin_src r</span>
+<span style="color: #7f7f7f;">  </span><span style="color: #0000ff;">f</span><span style="color: #7f7f7f;"> </span><span style="color: #008b8b;">&lt;-</span><span style="color: #7f7f7f;"> </span><span style="color: #a020f0;">function</span><span style="color: #7f7f7f;">(x) {</span>
+<span style="color: #7f7f7f;">  x + x</span>
+<span style="color: #7f7f7f;">  }</span>
+<span style="color: #b22222;">#+end_src</span>
+
+<span style="color: #b22222;">#+begin_src julia</span>
+<span style="color: #7f7f7f;">  </span><span style="color: #a020f0;">function</span><span style="color: #7f7f7f;"> </span><span style="color: #0000ff;">f</span><span style="color: #7f7f7f;">(x)</span>
+<span style="color: #7f7f7f;">      x + x</span>
+<span style="color: #7f7f7f;">  </span><span style="color: #a020f0;">end</span>
+<span style="color: #b22222;">#+end_src</span>
+</pre>
+</div>
+
+<ul>
+<li>Options with <code>:tangle</code> or <code>:noweb</code> or <code>:export</code> etc.</li>
+<li><code>C-c C-,</code> opens the menu of different blocks</li>
+<li>Org 9.2 <code>&lt;s</code> or <code>&lt;q</code> &#x2026; does not work anymore. Use Org Tempo.</li>
+
+</ul>
+
+</section>
+<section id="slide-sec-">
+<h4 id="org8eaf4f1">Eval blocks</h4>
+<p>
+demo
+</p>
+
+<ul>
+<li><code>C-c C-v t</code> tangles i.e. writes to files the exposed blocks</li>
+<li><code>C-c C-v e</code> evals all the blocks</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org43a1488">Remember!</h2>
+<p>
+<span class="underline">Org-mode is</span>:
+</p>
+
+<ul>
+<li>Markdown on steroids</li>
+<li>Jupyter notebook usable outside class (troll inside :-)</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="https://i.pinimg.com/originals/9f/2c/e8/9f2ce89a8d9e7db42a03041717f5e276.jpg" alt="9f2ce89a8d9e7db42a03041717f5e276.jpg" width="40%" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="org9b4410d">Start now!</h2>
+
+<div class="figure">
+<p><img src="https://spaceplace.nasa.gov/review/galactic-explorer/galactic_explorer.en.png" alt="galactic_explorer.en.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-sec-">
+<h4 id="orgedcb7db">Key of Success</h4>
+<ul>
+<li><p>
+<b><i>Master a tool needs large amount of work</i></b>
+</p>
+
+<p>
+think all the maths you learn before complete non-trivial proofs
+</p></li>
+
+<li><p>
+<b><i>Master a tool is not easy; otherwise it is a lie</i></b>
+</p>
+
+<p>
+think nunchaku practise to be as efficient as Bruce Lee
+</p></li>
+
+</ul>
+
+<blockquote nil>
+<p>
+Why computing tools should be different ?
+</p>
+</blockquote>
+
+<p>
+<a href="http://norvig.com/21-days.html">Be good at something is long</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="orgd98c199">My personal conclusion</h2>
+<div class="outline-text-2" id="text-orgd98c199">
+</div>
+</section>
+<section id="slide-sec-">
+<h4 id="org00f5a80">Why flamewar tools ? :-)</h4>
+<ul>
+<li>Our daily life is interacting with computers</li>
+<li>We are all differently <i>wired</i></li>
+<li>Cognition is not straightforward</li>
+
+</ul>
+
+<blockquote nil>
+<p>
+Tools should be freedom, not constraint and pain.
+</p>
+</blockquote>
+
+<ul>
+<li>Tools must help you to <a href="https://orgmode.org/worg/org-gtd-etc.html">get things done</a></li>
+<li>Org+Emacs pays off &#x2026; for me</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-">
+<h2 id="orgdaba5a0">Happy end?</h2>
+<div class="outline-text-2" id="text-orgdaba5a0">
+</div>
+</section>
+<section id="slide-sec-">
+<h4 id="org442cc27">Be productive in procrastination :-)</h4>
+
+<div class="figure">
+<p><img src="http://www.phdcomics.com/comics/archive/phd010408s.gif" alt="phd010408s.gif" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="https://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: false,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
